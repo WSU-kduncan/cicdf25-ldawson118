@@ -55,8 +55,9 @@ The Dockerfile builds from the base image httpd:2.4 and copies the content for t
 
 ### CI with GitHub Actions
 - Explanation of workflow trigger
-  - The workflow triggers on a push
+  - The workflow triggers on a push to the main branch
 - Explanation of workflow steps
+  - Checkout to the repository
   - Login to Docker Hub using the secrets in the Github repo
   - Set up Docker Buildx which is for building images
   - Build the Docker image and push it to Docker Hub
@@ -76,5 +77,3 @@ The Dockerfile builds from the base image httpd:2.4 and copies the content for t
   - Run the image with `docker run -p 8080:80 dawson118/panda-site:latest`
 - Link to your DockerHub repository
   - [DockerHub Repository](https://hub.docker.com/repositories/dawson118)
-
-## Part 3: Semantic Versioning
