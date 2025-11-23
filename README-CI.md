@@ -69,5 +69,10 @@ The Dockerfile builds from the base image httpd:2.4 and copies the content for t
 
 ### Testing & Validating
 - How to test that your workflow did its tasking
+  - After pushing a commit to the Github repo, go to the Actions tab
+  - Here you can see which steps of the workflow completed properly
 - How to verify that the image in DockerHub works when a container is run using the image
+  - Pull the image with `docker pull dawson118/panda-site:latest`
+  - Run the image with `docker run -p 8080:80 dawson118/panda-site:latest`
 - Link to your DockerHub repository
+  - [DockerHub Repository](https://hub.docker.com/repositories/dawson118)
