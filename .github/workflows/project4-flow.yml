@@ -2,7 +2,8 @@ name: Build and Push Docker Image to Dockerhub
 
 on:
   push:
-    branches: [ "main" ]
+    tags:
+      - 'v*.*.*'
 
 jobs:
   docker:
@@ -11,6 +12,18 @@ jobs:
     - 
       name: Checkout Repo
       uses: actions/checkout@v4
+    - 
+      name: Docker meta
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: |
+          dawson118/panda-site
+        tags: |
+          type=raw,value=latest
+          type=semver,pattern={{version}}
+          type=semver,pattern={{major}}
+          type=semver,pattern={{major}}.{{minor}}
     - 
       name: Login to Dockerhub
       uses: docker/login-action@v3
@@ -26,4 +39,4 @@ jobs:
       with:
         context: .
         push: true
-        tags: dawson118/panda-site:latest
+        tags: ${{ steps.meta.outputs.tags }}

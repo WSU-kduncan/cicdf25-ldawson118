@@ -76,3 +76,5 @@ The Dockerfile builds from the base image httpd:2.4 and copies the content for t
   - Run the image with `docker run -p 8080:80 dawson118/panda-site:latest`
 - Link to your DockerHub repository
   - [DockerHub Repository](https://hub.docker.com/repositories/dawson118)
+
+## Part 3: Semantic Versioning
