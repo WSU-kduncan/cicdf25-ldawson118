@@ -1,3 +1,26 @@
+# Project Overview
+### Project Goal
+The goal of this project was to configure a workflow that would build and push images to Dockerhub with specific tags whenever a tag is pushed to Github
+
+### Tools Used
+- Github Actions
+  - Actions
+    - checkout (checks out the repository)
+  - Docker
+    - metadata-action (generates metadata tags for docker images based on tags pushed to Github)
+    - login-action (logs into Dockerhub, allowing for access to push images)
+    - setup-buildx-action (sets up Docker Buildx, which is used for building Docker images)
+    - build-push-action (builds the Docker image and pushes it to Dockerhub)
+- Dockerhub
+  - Contains the images and tags that are pushed
+- Git/Github
+  - Activates the actions based on the workflow
+- Workflow file
+  - Specifies the actions that should be taken when a tag/commit is pushed to Github
+
+### Continuous Integration Process Diagram
+![Workflow Diagram](Workflow_Diagram.png)
+
 ## Part 1: Create a Docker Container Image
 ### Web Content
 The website was generated using ChatGPT and is themed around Panda Bears.
@@ -62,8 +85,9 @@ The Dockerfile builds from the base image httpd:2.4 and copies the content for t
   - Set up Docker Buildx which is for building images
   - Build the Docker image and push it to Docker Hub
 - Explanation / highlight of values that need updated if used in a different repository
-  - Change `DOCKER_USERNAME` to the proper username used to login
-  - Change `dawson118/panda-site:latest` to the proper image:tag
+  - Change `DOCKER_USERNAME` to the either the proper username used to login or a secret in your personal repo that holds your Docker username
+  - Change `DOCKER_TOKEN` to either the token (not recommended for security), or a secret in your personal repo that holds the token.
+  - Change `dawson118/panda-site:latest` to the proper `repo/image:tag` you are trying to pull
   - Change `main` to the branch that you wish to run the action on
 - Link to workflow file in your GitHub repository
   - [Workflow File](.github/workflows/project4-flow.yml)
@@ -77,3 +101,6 @@ The Dockerfile builds from the base image httpd:2.4 and copies the content for t
   - Run the image with `docker run -p 8080:80 dawson118/panda-site:latest`
 - Link to your DockerHub repository
   - [DockerHub Repository](https://hub.docker.com/repositories/dawson118)
+
+
+## Resources
