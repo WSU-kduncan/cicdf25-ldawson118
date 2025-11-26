@@ -26,13 +26,13 @@ The goal of this project was to configure a workflow that would build and push i
 The website was generated using ChatGPT and is themed around Panda Bears.
 
 The index.html file contains an image of a panda bear and a quick overview of what they are
-[index.html](web-content/index.html)
+- [index.html](web-content/index.html)
 
 The facts.html file contains a few fun facts about pandas
-[facts.html](web-content/facts.html)
+- [facts.html](web-content/facts.html)
 
 The styles.css file contains the code that determines the style of the page
-[styles.css](web-content/styles.css)
+- [styles.css](web-content/styles.css)
 
 ### Dockerfile
 The Dockerfile builds from the base image httpd:2.4 and copies the content for the panda site to the default location for httpd in apache2.
