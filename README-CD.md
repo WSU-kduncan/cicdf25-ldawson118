@@ -1,3 +1,6 @@
+### Note for Grader: 
+In the project instructions it said to make a separate CD document for this part, but the README-CD wasn't listed in the deliverables, so I moved all of this information to the README-CI file, but left this here just in case.
+
 ## Part 3: Semantic Versioning
 ### Generating tags
 - How to see tags in a git repository
