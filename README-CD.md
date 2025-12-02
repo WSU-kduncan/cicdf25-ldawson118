@@ -1,36 +1,54 @@
-### Note for Grader: 
-In the project instructions it said to make a separate CD document for this part, but the README-CD wasn't listed in the deliverables, so I moved all of this information to the README-CI file, but left this here just in case.
-
-## Part 3: Semantic Versioning
-### Generating tags
-- How to see tags in a git repository
-  - Use `git tag`
-- How to generate a tag in a git repository
-  - Make sure to `git add` and `git commit` first
-  - Use `git tag -a v*.*.* -m "tag message"` (Replace `v*.*.*` with the proper tag)
-- How to push a tag in a git repository to GitHub
-  - `git push origin v*.*.*`
-### Semantic Versioning Container Images with GitHub Actions
-- Explanation of workflow trigger
-  - The workflow triggers when a tag matching the v*.*.* format is pushed to the repo
-- Explanation of workflow steps
-  - Checkout the repository
-  - Create tags for the Docker image
-  - Login to Docker Hub using the secrets in the Github repo
-  - Set up Docker Buildx which is for building images
-  - Build the Docker image and push it to Docker Hub with the generated metadata tags
-- Explanation / highlight of values that need updated if used in a different repository
-  - Change `DOCKER_USERNAME` to the either the proper username used to login or a secret in your personal repo that holds your Docker username
-  - Change `DOCKER_TOKEN` to either the token (not recommended for security), or a secret in your personal repo that holds the token.
-  - Change `dawson118/panda-site:latest` to the proper `repo/image:tag` you are trying to pull
-- Link to workflow file in your GitHub repository
-  - [Workflow File](.github/workflows/project4-flow.yml)
-### Testing & Validating
-- How to test that your workflow did its tasking
-  - After pushing a tag to the Github repo, go to the Actions tab
-  - Here you can see which steps of the workflow completed properly
-  - You can also check the Dockerhub repo to see all the tags properly uploaded
-- How to verify that the image in DockerHub works when a container is run using the image
-  - Pull the version you wish to test and run it with `docker run -p 8080:80 dawson118/panda-site:version`
-- Link to your DockerHub repository with evidence of the tag set
-  - [Dockerhub Repository](https://hub.docker.com/repository/docker/dawson118/panda-site/general)
+# Part 1: Script a Refresh
+### EC2 Instance Details
+- AMI information
+  - Ubuntu Server 24.04
+- Instance type
+  - t2.medium
+- Recommended volume size
+  - 30GB volume storage
+- Security Group configuration
+  - SSH
+    - Home IP
+    - WSU CIDR
+  - HTTP
+    - Any IP
+- Security Group configuration justification / explanation
+  - I needed to be able to access the instance with SSH from home or Wright State, and I need the website to be able to recieve traffic so the HTTP is open to any IP
+### Docker Setup on OS on the EC2 instance
+- How to install Docker for OS on the EC2 instance
+```
+sudo apt-get update
+sudo apt-get upgrade
+curl -fsSL https://get.docker.com -o get-docker.sh
+sh get-docker.sh
+sudo usermod -aG docker $USER
+sudo systemctl enable docker
+```
+- How to confirm Docker is installed and that OS on the EC2 instance can successfully run containers
+  - Run `systemctl status docker.service` to ensure it is running
+  - Use `docker run hello-world` to ensure it can properly pull and run images
+### Testing on EC2 Instance
+- How to pull container image from DockerHub repository
+  - `docker pull dawson118/panda-site:latest`
+- How to run container from image
+  - `docker run -d -p 80:80 --name panda-site dawson118/panda-site`
+    - Runs the image in detached mode, allowing it to run as a background process so you can leave it running
+  - `docker run -it -p 80:80 --name panda-site dawson118/panda-site`
+    - Runs the image as a foreground process so you cannot do anything else until you have stopped the container
+  - I would recommend using the -d flag so that you can do other work while testing and not have to worry about restarting it each time you want to access the website
+- How to verify that the container is successfully serving the web applicatio
+  - Run this command: `curl http://instance-public-ip:80`
+  - Go to `http://instance-public-ip:80` in your web browser
+### Scripting Container Application Refresh
+- Description of the bash script
+  - Stop the container
+  - Remove/delete the container
+  - Pull the latest image from Docker Hub
+  - Run the container in detached mode with the name panda-site
+  - Print a success message to the console
+- How to test / verify that the script successfully performs its taskings
+  - Run the script
+  - Use `docker ps -a` to ensure the container is running and you can see when it was created
+  - Go to `http://instance-public-ip:80` in your web browser to ensure the container is actually running properly
+- Link to [Bash Script](deployment/deploy.sh)
+  
