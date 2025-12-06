@@ -1,0 +1,17 @@
+[
+  {
+    "id": "deploy-container",
+    "execute-command": "/home/ubuntu/deploy.sh",
+    "command-working-directory": "/home/ubuntu",
+    "trigger-rule": {
+        "match": {
+                "type": "payload-hmac-sha1",
+                "secret": "panda-secret",
+                "parameter": {
+                        "source": "header",
+                        "name": "X-Hub-Signature"
+                }
+        }
+    }
+  }
+]

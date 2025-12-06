@@ -1,0 +1,10 @@
+[Unit]
+Description=Small server for creating HTTP endpoints (hooks)
+Documentation=https://github.com/adnanh/webhook/
+
+[Service]
+ExecStart=/usr/bin/webhook -nopanic -hooks /home/ubuntu/hooks.json --verbose
+Restart=Always
+
+[Install]
+WantedBy=multi-user.target

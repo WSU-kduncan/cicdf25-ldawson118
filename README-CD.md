@@ -51,4 +51,40 @@ sudo systemctl enable docker
   - Use `docker ps -a` to ensure the container is running and you can see when it was created
   - Go to `http://instance-public-ip:80` in your web browser to ensure the container is actually running properly
 - Link to [Bash Script](deployment/deploy.sh)
-  
+
+# Part 2: Listen
+### Configuring a webhook Listener on EC2 Instance
+- How to install adnanh's webhook to the EC2 instance
+  - `sudo apt install webhook`
+- How to verify successful installation
+  - `webhook --version`
+  - `sudo systemctl status webhook.service`
+- Summary of the webhook definition file
+  - names the hook id as deploy-container
+  - executes the deploy.sh script
+  - sets working directory to /home/ubuntu so it can find the script
+  - ensures that the payload sent matches with the signature from GitHub
+  - uses a shared secret to validate the signature sent from Github
+  - searches for the X-Hub-Signature for verification in the header of the request
+- How to verify definition file was loaded by webhook
+  - `webhook -hooks /home/ubuntu/hooks.json -verbose`
+  - ensure it says "loaded: deploy-container"
+- How to verify webhook is receiving payloads that trigger it
+  - how to monitor logs from running webhook
+    - `journalctl -u webhook`
+  - what to look for in docker process views
+    - use `docker ps -a`
+    - check how long the container has been up for, it should be about as long as it has been since the webhook was triggered
+- LINK to definition file in repository
+  - [Webhook definition file](deployment/hooks.json)
+### Configure a webhook Service on EC2 Instance
+Summary of webhook service file contents
+How to enable and start the webhook service
+  - `sudo systemctl enable webhook.service`
+  - `sudo systemctl start webhook.service`
+How to verify webhook service is capturing payloads and triggering bash script
+LINK to service file in repository
+  - [Webhook service file](deployment/webhook.service)
+
+References:
+Github: I used a Github Forums page to confirm the journalctl command to check webhook logs
