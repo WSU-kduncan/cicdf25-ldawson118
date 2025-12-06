@@ -71,7 +71,7 @@ sudo systemctl enable docker
   - ensure it says "loaded: deploy-container"
 - How to verify webhook is receiving payloads that trigger it
   - how to monitor logs from running webhook
-    - `journalctl -u webhook`
+    - `sudo journalctl -u webhook.service -f`
   - what to look for in docker process views
     - use `docker ps -a`
     - check how long the container has been up for, it should be about as long as it has been since the webhook was triggered
@@ -79,10 +79,15 @@ sudo systemctl enable docker
   - [Webhook definition file](deployment/hooks.json)
 ### Configure a webhook Service on EC2 Instance
 Summary of webhook service file contents
+  - starts the service using hooks.json
+  - restart always to ensure its always running
 How to enable and start the webhook service
   - `sudo systemctl enable webhook.service`
   - `sudo systemctl start webhook.service`
 How to verify webhook service is capturing payloads and triggering bash script
+  - `sudo journalctl -u webhook.service -f`
+  - you can check and see the process going through in the console
+  - `docker ps -a` and ensure the container was recently re-pulled and run
 LINK to service file in repository
   - [Webhook service file](deployment/webhook.service)
 

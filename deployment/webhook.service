@@ -4,7 +4,7 @@ Documentation=https://github.com/adnanh/webhook/
 
 [Service]
 ExecStart=/usr/bin/webhook -nopanic -hooks /home/ubuntu/hooks.json --verbose
-Restart=Always
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
