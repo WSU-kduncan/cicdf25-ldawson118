@@ -23,6 +23,9 @@ The goal of this project was to set up a continuous development process using we
 - AWS
   - Provides the EC2 instance that the webhook listener and web content is hosted on
 
+ ### Continuous Deployment Process Diagram
+ ![Continuous Development Diagram](CD-Diagram.png)
+
 # Part 1: Script a Refresh
 ### EC2 Instance Details
 - AMI information
