@@ -64,7 +64,7 @@ sudo systemctl enable docker
   - `docker run -it -p 80:80 --name panda-site dawson118/panda-site`
     - Runs the image as a foreground process so you cannot do anything else until you have stopped the container
   - I would recommend using the -d flag so that you can do other work while testing and not have to worry about restarting it each time you want to access the website
-- How to verify that the container is successfully serving the web applicatio
+- How to verify that the container is successfully serving the web application
   - Run this command: `curl http://instance-public-ip:80`
   - Go to `http://instance-public-ip:80` in your web browser
 ### Scripting Container Application Refresh
