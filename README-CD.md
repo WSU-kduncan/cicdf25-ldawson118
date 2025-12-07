@@ -106,17 +106,17 @@ sudo systemctl enable docker
 - LINK to definition file in repository
   - [Webhook definition file](deployment/hooks.json)
 ### Configure a webhook Service on EC2 Instance
-Summary of webhook service file contents
+- Summary of webhook service file contents
   - starts the service using hooks.json
   - restart always to ensure its always running
-How to enable and start the webhook service
+- How to enable and start the webhook service
   - `sudo systemctl enable webhook.service`
   - `sudo systemctl start webhook.service`
-How to verify webhook service is capturing payloads and triggering bash script
+- How to verify webhook service is capturing payloads and triggering bash script
   - `sudo journalctl -u webhook.service -f`
   - you can check and see the process going through in the console
   - `docker ps -a` and ensure the container was recently re-pulled and run
-LINK to service file in repository
+- LINK to service file in repository
   - [Webhook service file](deployment/webhook.service)
 
 # Part 3: Send a Payload
