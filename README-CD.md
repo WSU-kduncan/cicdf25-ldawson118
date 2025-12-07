@@ -91,5 +91,28 @@ How to verify webhook service is capturing payloads and triggering bash script
 LINK to service file in repository
   - [Webhook service file](deployment/webhook.service)
 
+# Part 3: Send a Payload
+### Configuring a Payload Sender
+- Justification for selecting GitHub or DockerHub as the payload sender
+  - Github was selected for this project. I chose this so that I could select what specific events trigger the webhook. This way I can set it so it only triggers when I want it to, while Docker Hub does not allow the same specifics and triggers specifically on push
+- How to enable your selection to send payloads to the EC2 webhook listener
+  1. Navigate to the Github repo for the project
+  2. Click settings
+  3. Click webhooks in the menu on the left
+  4. Click "add webhook"
+  5. Enter the URL into the dialogue box: http://98.95.49.125:9000/hooks/deploy-container
+  6. Select application/json for content type
+  7. Set the secret to be used for verification
+  8. Select individual events for trigger
+  9. Click create
+- Explain what triggers will send a payload to the EC2 webhook listener
+  - I have it set up to only trigger on a tag push to Github. This way, the webhook will only trigger when a tag is pushed. This way, the container will be redeployed whenever a new version is uploaded
+- How to verify a successful payload delivery
+  1. Navigate back to webhooks in Github and click the webhook you wish to view
+  2. Click "Recent Deliveries"
+  3. Here you can select deliveries to view and whether or not they were successful, as well as see the actual payload
+- How to validate that your webhook only triggers when requests are coming from appropriate sources (GitHub or DockerHub)
+  - The webhook can only trigger when requests come from Github because there is a shared secret set up, and if a source doesn't send a signature using the secret, then it will not trigger 
+
 References:
 Github: I used a Github Forums page to confirm the journalctl command to check webhook logs
