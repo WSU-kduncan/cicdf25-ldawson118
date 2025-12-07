@@ -1,3 +1,28 @@
+# Continuous Deployment Project
+### Goal
+The goal of this project was to set up a continuous development process using webhook and an Amazon AWS EC2 instance. The project built on the CI project which uploaded new tagged versions of a docker container to Docker Hub when pushed to Github. This project involved setting up a webhook that will, when a new tag is pushed, pull the new version from Docker Hub and deploy it to the EC2 instance, keeping it updated with new releases.
+
+### Tools Used
+- Github Actions
+  - Actions
+    - checkout (checks out the repository)
+  - Docker
+    - metadata-action (generates metadata tags for docker images based on tags pushed to Github)
+    - login-action (logs into Dockerhub, allowing for access to push images)
+    - setup-buildx-action (sets up Docker Buildx, which is used for building Docker images)
+    - build-push-action (builds the Docker image and pushes it to Dockerhub)
+- Dockerhub
+  - Contains the images and tags that are pushed
+- Git/Github
+  - Activates the actions based on the workflow
+  - Sends the payload to the webhook
+- Workflow file
+  - Specifies the actions that should be taken when a tag/commit is pushed to Github
+- Webhook
+  - Provides the listener that pulls and deploys the web content when new tags are pushed
+- AWS
+  - Provides the EC2 instance that the webhook listener and web content is hosted on
+
 # Part 1: Script a Refresh
 ### EC2 Instance Details
 - AMI information
@@ -114,5 +139,13 @@ LINK to service file in repository
 - How to validate that your webhook only triggers when requests are coming from appropriate sources (GitHub or DockerHub)
   - The webhook can only trigger when requests come from Github because there is a shared secret set up, and if a source doesn't send a signature using the secret, then it will not trigger 
 
-References:
-Github: I used a Github Forums page to confirm the journalctl command to check webhook logs
+# References:
+- Github: I used a Github Forums page to confirm the journalctl command to check webhook logs
+- This was used as a basic reference for setting up the webhook:
+  - https://github.com/adnanh/webhook
+- These were used to assist with setup and process for CD:
+  - https://levelup.gitconnected.com/automated-deployment-using-docker-github-actions-and-webhooks-54018fc12e32
+  - https://blog.devgenius.io/build-your-first-ci-cd-pipeline-using-docker-github-actions-and-webhooks-while-creating-your-own-da783110e151
+- This was used as an extra reference for setting up the service file:
+  - https://linuxhandbook.com/create-systemd-services/
+- The class lectures and recordings were used extensively to help walk through the process
