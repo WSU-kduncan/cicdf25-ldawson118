@@ -134,7 +134,7 @@ sudo systemctl enable docker
   8. Select individual events for trigger
   9. Click create
 - Explain what triggers will send a payload to the EC2 webhook listener
-  - I have it set up to only trigger on a tag push to Github. This way, the webhook will only trigger when a tag is pushed. This way, the container will be redeployed whenever a new version is uploaded
+  - I have it set up to only trigger on a workflow run on Github. This way, the webhook will only trigger when a tag is pushed(since the workflow only triggers this way), and then it will run once the build and push from the Github Action is finished. This method means the container will be redeployed whenever a new version is uploaded
 - How to verify a successful payload delivery
   1. Navigate back to webhooks in Github and click the webhook you wish to view
   2. Click "Recent Deliveries"
