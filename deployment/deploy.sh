@@ -6,6 +6,6 @@ docker rm panda-site
 
 docker pull dawson118/panda-site:latest
 
-docker run -d --restart always -p 80:80 --name panda-site dawson118/panda-site
+docker run -d --restart always -p 80:80 --name panda-site dawson118/panda-site:latest
 
 echo "Container successfully running"
